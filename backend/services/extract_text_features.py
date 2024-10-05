@@ -25,9 +25,17 @@ def extract_fetures(sentence):
     print(word_features)
     result['Self-reference'] = float(word_features['self_reference'])
     result['Other-reference'] = float(word_features['other_reference'])
-    result['Past orientation'] = float(word_features['tense']['past'])
-    result['Present orientation'] = float(word_features['tense']['present'])
-    result['Future orientation'] = float(word_features['tense']['future'])
+
+    tense_dict = word_features.get('tense',None)
+    if not tense_dict:
+        result['Past orientation'] = float(word_features['past'])
+        result['Present orientation'] = float(word_features['present'])
+        result['Future orientation'] = float(word_features['future'])
+    else:
+        result['Past orientation'] = float(word_features['tense']['past'])
+        result['Present orientation'] = float(word_features['tense']['present'])
+        result['Future orientation'] = float(word_features['tense']['future'])
+
     result['Word complexity'] = float(word_features['complexity'])
     result['Certainty'] = float(word_features['certainty'])
     result['Uncertainty'] = float(word_features['uncertainty'])

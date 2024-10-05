@@ -15,8 +15,8 @@ def compute_reputation_score(wallet: str, farcaster_id: str):
     return _score
 
 
-wallet = "0xf66c00759467c6524b0c86af132bb52786b37382" #biancotto
-farcaster_id = "260770"
-test = compute_reputation_score(wallet,farcaster_id)
-print(test)
+# wallet = "0xf66c00759467c6524b0c86af132bb52786b37382" #biancotto
+# farcaster_id = "260770"
+# test = compute_reputation_score(wallet,farcaster_id)
+# print(test)
 

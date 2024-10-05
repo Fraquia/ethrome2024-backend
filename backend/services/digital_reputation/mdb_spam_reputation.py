@@ -1,25 +1,36 @@
 import requests
+from dotenv import load_dotenv
+import os
+import json
+
+
+load_dotenv()
+api_key = os.getenv("MBD_APY_KEY")
 
 
 def get_spam_score(_id: str):
     try:
         url = "https://api.mbd.xyz/v1/farcaster/users/labels/for-users"
 
-        payload = {
+        payload = json.dumps({
             "users_list": [_id],
-            "label_category": "spam"
-        }
+            "label_category": "llm_generated"
+        })
+
         headers = {
-            "accept": "application/json",
             "HTTP-Referer": "https://docs.mbd.xyz/",
             "X-Title": "mbd_docs",
+            "accept": "application/json",
             "content-type": "application/json",
-            "x-api-key": "mbd-bd3df8ecf52f86f83b90bd36a5ea8bc3c5e2aacb8b83a518fa3a13eeac773e09"
+            "x-api-key": api_key
         }
 
-        response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(url,
+                                 headers=headers,
+                                 data=payload)
 
-        return float(response.text)
+        return response['body'][0]['score']
 
-    except:
+    except Exception as e:
+        print(e)
         return 0
