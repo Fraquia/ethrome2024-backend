@@ -1,5 +1,5 @@
 import wordfreq
-from backend.tokenizer import tokenize_sentence
+from backend.tokenizer import tokenize_sentence, tokenize_and_remove_stopwords
 
 def word_rarity_score(word, lang='en', corpus='large'):
     """
@@ -54,8 +54,15 @@ Your donations will help us move past this devastation, and we will remain trans
 
 Friends of ours have lost their homes. Here is some of what we are seeing in our day-to-day right now:"""
 
-words = tokenize_sentence(sentence)
-rarity_scores = score_words(words, lang='en', corpus='large')
+sentence = " ".join(tokenize_and_remove_stopwords(sentence))
 
+words = tokenize_sentence(sentence)
+print(words)
+rarity_scores = score_words(words, lang='en', corpus='large')
+print(rarity_scores)
+
+c=0
 for word, score in rarity_scores.items():
-    print(f"Word: {word}, Rarity Score: {score}")
+    c+=score
+
+print(c)
