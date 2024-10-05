@@ -1,7 +1,7 @@
 import numpy as np
 from fastembed import TextEmbedding
 from sklearn.metrics.pairwise import cosine_similarity
-from backend.tokenizer import tokenize_sentence, tokenize_and_remove_stopwords
+from services.tokenizer import tokenize_and_remove_stopwords
 import time
 
 

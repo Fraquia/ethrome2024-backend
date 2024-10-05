@@ -1,5 +1,5 @@
 import wordfreq
-from backend.tokenizer import tokenize_sentence, tokenize_and_remove_stopwords
+from services.tokenizer import tokenize_sentence, tokenize_and_remove_stopwords
 
 def word_rarity_score(word, lang='en', corpus='large'):
     """
