@@ -23,6 +23,8 @@ def extract_fetures(sentence):
     # words complexity
     word_features = compute_word_complexity(sentence)
     print(word_features)
+
+
     result['Self-reference'] = float(word_features['self_reference'])
     result['Other-reference'] = float(word_features['other_reference'])
 
@@ -48,8 +50,8 @@ def extract_fetures(sentence):
     # sentiment analysis
     #positive, neutral, negative = get_sentiment_analysis(sentence)
     res = get_sentiment_analysis(sentence)
-    result['positive_emotion'] = res[2]['score']
-    result['negative_emotion'] = res[0]['score']
+    result['Positive emotion'] = res[0][2]['score']
+    result['Negative emotion'] = res[0][0]['score']
 
     # lenght
     sentence_lenght = len(tokenize_sentence(sentence))

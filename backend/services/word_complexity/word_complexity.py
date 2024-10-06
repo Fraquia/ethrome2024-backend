@@ -17,7 +17,7 @@ def compute_word_complexity(sentence):
   - how much the following sentence is: self-reference, other-reference between 0 and 1.
   - how much the following sentence express: certainty, uncertainty between 0 an 1.
   - how much the following sentence refers to: present, past, future between 0 and 1
-  Give me the result in json format
+  Give me the result in json format, use the underscore to connect two consecutive words
   """
 
   response = client.completions.create(

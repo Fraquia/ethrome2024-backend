@@ -3,23 +3,27 @@ from backend.models.run_inference import get_prediction_score
 from backend.services.extract_text_features import extract_fetures
 from backend.services.digital_reputation.compute_reputation import compute_reputation_score
 import pandas as pd
-
-
+import os
 from fastapi import APIRouter
-
 
 router = APIRouter()
 
-#todo:
-# retrieve sentence from ipfs by iD??
+abs_db_path = os.path.abspath("./backend/db/database.csv")
+print(abs_db_path)
 
 @router.post("/backend/fraud_prediction")
-def predict_fraud(sentence: str, wallet:str, farcaster_id: str):
+def predict_fraud(id):
+
+    _df = pd.read_csv("/Users/emanuelefratocchi/Documents/Progetti/ethrome/ethrome2k24/backend/db/database.csv")
+    campaign_data = _df.loc[_df['id']==int(id)]
+
+    sentence = campaign_data['Description'].values[0]
+    wallet = campaign_data['Wallet'].values[0]
+    farcaster_id = campaign_data['fid'].values[0]
+
     try:
-        # retrieve text fetures
-        # build sentence vector
+        # retrieve text features and build sentence vector
         sentence_features = extract_fetures(sentence)
-        #sentence_vector = [value for value in sentence_features.values()]
         sentence_df = pd.DataFrame.from_dict(sentence_features, orient='index').T
 
         # inference
@@ -33,7 +37,7 @@ def predict_fraud(sentence: str, wallet:str, farcaster_id: str):
         rep_weight = 0.6
         score = ((text_weight*text_prediction_score[0]) + (rep_weight*reputation_score))/2
 
-        response = {"prediction": score, "status_code": 200}
+        response = {"prediction": float(score), "status_code": 200}
 
         return response
 
