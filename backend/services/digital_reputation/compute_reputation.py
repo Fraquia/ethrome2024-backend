@@ -6,8 +6,8 @@ def compute_reputation_score(wallet: str, farcaster_id: str):
     spam_score = get_spam_score(farcaster_id)
     talent_score = extract_talent_protocol_score(wallet)
 
-    talent_weight = 0.85
-    spam_weight = 0.15
+    talent_weight = 0.70
+    spam_weight = 0.30
 
     _score = (talent_weight*talent_score) +(spam_weight*(1-spam_score))
 
