@@ -1,7 +1,7 @@
-from services.sentiment_analysis.sentiment_analysis import get_sentiment_analysis
-from services.sentence_complexity.lexical_complexity import compute_lexical_diversity
-from services.word_complexity.word_complexity_openai import compute_word_complexity
-from services.tokenizer import tokenize_sentence
+from backend.services.sentiment_analysis.sentiment_analysis import get_sentiment_analysis
+from backend.services.sentence_complexity.lexical_complexity import compute_lexical_diversity
+from backend.services.word_complexity.word_complexity import compute_word_complexity
+from backend.services.tokenizer import tokenize_sentence
 
 
 result = {
@@ -47,9 +47,9 @@ def extract_fetures(sentence):
 
     # sentiment analysis
     #positive, neutral, negative = get_sentiment_analysis(sentence)
-    # res = get_sentiment_analysis(sentence)
-    # result['positive_emotion'] = positive
-    # result['negative_emotion'] = negative
+    res = get_sentiment_analysis(sentence)
+    result['positive_emotion'] = res[2]['score']
+    result['negative_emotion'] = res[0]['score']
 
     # lenght
     sentence_lenght = len(tokenize_sentence(sentence))

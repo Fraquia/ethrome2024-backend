@@ -1,7 +1,7 @@
 #from services.text_inference.run_inference import get_prediction_score
-from models.run_inference import get_prediction_score
-from services.extract_text_features import extract_fetures
-from services.digital_reputation.compute_reputation import compute_reputation_score
+from backend.models.run_inference import get_prediction_score
+from backend.services.extract_text_features import extract_fetures
+from backend.services.digital_reputation.compute_reputation import compute_reputation_score
 import pandas as pd
 
 

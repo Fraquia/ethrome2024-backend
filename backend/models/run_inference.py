@@ -16,6 +16,3 @@ def get_prediction_score(sentence_vector):
     prediction = model_loaded.predict(dvector)
 
     return prediction
-
-
-print(os.path.abspath("backend/models/text_model.json"))
