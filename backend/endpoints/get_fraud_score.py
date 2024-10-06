@@ -1,6 +1,6 @@
 from services.text_inference.run_inference import get_prediction_score
 from services.extract_text_features import extract_fetures
-from services.digital_reputation.talent_protocol_passport import get_talent_protocol_score
+from services.digital_reputation.talent_protocol_passport import extract_talent_protocol_score
 import pandas as pd
 
 
@@ -13,7 +13,14 @@ router = APIRouter()
 # retrieve sentence from ipfs by iD??
 
 @router.post("/backend/fraud_prediction")
-def predict_fraud(sentence: str, wallet:str):
+def predict_fraud(id):
+
+    _db = pd.read_csv("/backend/db/database.csv")
+    campaign_data = _db.loc[_db['id']==id]
+    sentence = campaign_data['Description'].values()[0]
+    wallet = campaign_data['Wallet'].values()[0]
+
+
     try:
         # retrieve text fetures
         # build sentence vector
@@ -25,7 +32,7 @@ def predict_fraud(sentence: str, wallet:str):
         text_prediction_score = get_prediction_score(sentence_df)
 
         # talent_protocol_score
-        talent_protocol_score = get_talent_protocol_score(wallet)
+        talent_protocol_score = 1-extract_talent_protocol_score(wallet)
 
         # final scoring
         text_weight = 1
@@ -33,8 +40,7 @@ def predict_fraud(sentence: str, wallet:str):
         score = ((text_weight*text_prediction_score[0]) + (tp_weight*talent_protocol_score))/2
 
 
-        response = {"prediction": tp_weight, "status_code": 200}
-
+        response = {"prediction": score, "status_code": 200}
 
 
         return response
